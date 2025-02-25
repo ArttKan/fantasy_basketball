@@ -4,6 +4,7 @@ from flask import redirect, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
+import teams
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -28,8 +29,7 @@ def add_team():
 def create_team():
     team_name = request.form["name"]
 
-    sql = """INSERT INTO teams (team) VALUES (?)"""
-    db.execute(sql, [team_name])
+    teams.add_team(team_name)
 
     return redirect("/")
 
