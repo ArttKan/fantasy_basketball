@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Kirjautuminen</title>
+</head>
+
+<body>
+    <h1>Fantasy Basketball League</h1>
+  {% if session.username %}
+  <p>
+    Olet kirjautunut nimellä {{ session.username }}
+  </p>
+  {% endif %}
+</body>
+
+<p>
+    <a href="/login">Log in</a>
+    <a href="/register">Register</a>
+    <a href="/logout">Log out</a>
+</p>
+
+</html>
