@@ -19,6 +19,21 @@ def register():
     return render_template("register.html")
 
 
+@app.route("/add_team")
+def add_team():
+    return render_template("add_team.html")
+
+
+@app.route("/create_team", methods=["POST"])
+def create_team():
+    team_name = request.form["name"]
+
+    sql = """INSERT INTO teams (team) VALUES (?)"""
+    db.execute(sql, [team_name])
+
+    return redirect("/")
+
+
 @app.route("/create", methods=["POST"])
 def create():
     username = request.form["username"]
