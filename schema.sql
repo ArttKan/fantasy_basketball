@@ -5,12 +5,14 @@ CREATE TABLE users (
 );
 
 CREATE TABLE teams (
-    id SERIAL PRIMARY KEY,
-    team TEXT
+    id INTEGER PRIMARY KEY,
+    team TEXT,
+    wins INTEGER DEFAULT 0,
+    losses INTEGER DEFAULT 0
 );
 
 CREATE TABLE players (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     team_id INTEGER REFERENCES teams,
     player TEXT,
     gp INTEGER,
@@ -20,7 +22,7 @@ CREATE TABLE players (
 );
 
 CREATE TABLE games (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     home_id INTEGER REFERENCES teams,
     away_id INTEGER REFERENCES teams,
     winner_id INTEGER REFERENCES teams

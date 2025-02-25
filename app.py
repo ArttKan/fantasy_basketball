@@ -12,12 +12,19 @@ app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    all_teams = teams.get_teams()
+    return render_template("index.html", teams=all_teams)
 
 
 @app.route("/register")
 def register():
     return render_template("register.html")
+
+
+@app.route("/team/<int:team_id>")
+def show_team(team_id):
+    team = teams.get_team(team_id)
+    return render_template("show_team.html", team=team)
 
 
 @app.route("/add_team")
