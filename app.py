@@ -35,10 +35,24 @@ def add_team():
 @app.route("/create_team", methods=["POST"])
 def create_team():
     team_name = request.form["name"]
-
-    teams.add_team(team_name)
-
+    owner_id = session["user_id"]
+    teams.add_team(team_name, owner_id)
     return redirect("/")
+
+
+@app.route("/edit_team/<int:team_id>")
+def edit_team(team_id):
+    team = teams.get_team(team_id)
+    return render_template("edit_team.html", team=team)
+
+
+@app.route("/update_team", methods=["POST"])
+def update_team():
+    team_id = request.form["team_id"]
+    team_name = request.form["name"]
+    owner_id = session["user_id"]
+    teams.update_team(team_id, team_name, owner_id)
+    return redirect("/team/" + str(team_id))
 
 
 @app.route("/create", methods=["POST"])
@@ -68,11 +82,14 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-        sql = "SELECT password_hash FROM users WHERE username = ?"
-        password_hash = db.query(sql, [username])[0][0]
+        sql = "SELECT id, password_hash FROM users WHERE username = ?"
+        result = db.query(sql, [username])[0]
+        user_id = result["id"]
+        password_hash = result["password_hash"]
 
         if check_password_hash(password_hash, password):
             session["username"] = username
+            session["user_id"] = user_id
             return redirect("/")
         else:
             return "VIRHE: väärä tunnus tai salasana"
@@ -81,4 +98,5 @@ def login():
 @app.route("/logout")
 def logout():
     del session["username"]
+    del session["user_id"]
     return redirect("/")

@@ -7,8 +7,14 @@
 
 <body>
     <h1>{{ team.team }}</h1>
+    {% if session.user_id == team.owner  %}
+    <p>
+        <a href="/edit_team/{{ team.id }}">Edit team</a>
+    </p>
+    {% endif %}
     <h2>{{ team.id }}</h2>
-    <p>Record: {{ team.wins }}-{{ team.losses }}</p>
+    <p>{{ team.owner }}</p>
+    <p>Record: W-L</p>
 </body>
 
 </html>

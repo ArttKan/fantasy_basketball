@@ -7,8 +7,7 @@ CREATE TABLE users (
 CREATE TABLE teams (
     id INTEGER PRIMARY KEY,
     team TEXT,
-    wins INTEGER DEFAULT 0,
-    losses INTEGER DEFAULT 0
+    'owner' INTEGER
 );
 
 CREATE TABLE players (
@@ -27,11 +26,3 @@ CREATE TABLE games (
     away_id INTEGER REFERENCES teams,
     winner_id INTEGER REFERENCES teams
 );
-
-INSERT INTO teams (team) VALUES ('San Antonio Spurs');
-INSERT INTO teams (team) VALUES ('Cleveland Cavaliers');
-INSERT INTO teams (team) VALUES ('Golden State Warriors');
-INSERT INTO players (team_id, player, gp, pts, reb, ast) Values (3, 'Stephen Curry', 1, 35, 6, 10);
-INSERT INTO players (team_id, player, gp, pts, reb, ast) Values (1, 'Victor Wembanyama', 1, 27, 8, 5);
-INSERT INTO players (team_id, player, gp, pts, reb, ast) Values (2, 'Evan Mobley', 1, 20, 12, 6);
-INSERT INTO games (home_id, away_id, winner_id) VALUES (1, 2, 2);

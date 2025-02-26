@@ -1,16 +1,33 @@
 import db
 
 
-def add_team(team_name):
-    sql = "INSERT INTO teams (team) VALUES (?)"
-    db.execute(sql, [team_name])
+def add_team(team_name, owner_id):
+    sql = """INSERT INTO teams (team, owner)
+            VALUES (?, ?)"""
+    db.execute(sql, [team_name, owner_id])
 
 
 def get_teams():
-    sql = "Select id, team FROM teams"
+    sql = """SELECT id,
+                    team
+                FROM teams"""
     return db.query(sql)
 
 
 def get_team(team_id):
-    sql = "SELECT team, id, wins, losses FROM teams WHERE teams.id = ?"
+    sql = """SELECT teams.team,
+                    teams.id,
+                    teams.owner,
+                    users.username
+                FROM teams,
+                    users
+                WHERE teams.owner = users.id AND
+                    teams.id = ?"""
     return db.query(sql, [team_id])[0]
+
+
+def update_team(team_id, team_name, owner_id):
+    sql = """UPDATE teams SET team = ?,
+                            owner = ?
+                            WHERE id = ?"""
+    db.execute(sql, [team_name, owner_id, team_id])
