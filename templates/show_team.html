@@ -10,6 +10,7 @@
     {% if session.user_id == team.owner  %}
     <p>
         <a href="/edit_team/{{ team.id }}">Edit team</a>
+        <a href="/delete_team/{{ team.id }}">Delete team</a>
     </p>
     {% endif %}
     <h2>{{ team.id }}</h2>

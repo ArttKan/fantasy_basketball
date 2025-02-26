@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Delete team</title>
+</head>
+
+<body>
+  <h1>Delete team</h1>
+  <p>Are you sure you want to delete the team {{ team.team }}?</p>
+  <form action="/delete_team/{{ team.id }}" method="POST">
+        <input type="submit" name="delete" value="Delete team">
+        <input type="submit" name="cancel" value="Cancel">
+  </form>
+</body>
+
+</html>

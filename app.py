@@ -55,6 +55,20 @@ def update_team():
     return redirect("/team/" + str(team_id))
 
 
+@app.route("/delete_team/<int:team_id>", methods=["GET", "POST"])
+def delete_team(team_id):
+    if request.method == "GET":
+        team = teams.get_team(team_id)
+        return render_template("delete_team.html", team=team)
+
+    if request.method == "POST":
+        if "delete" in request.form:
+            teams.delete_team(team_id)
+            return redirect("/")
+        else:
+            return redirect("/team/" + str(team_id))
+
+
 @app.route("/create", methods=["POST"])
 def create():
     username = request.form["username"]

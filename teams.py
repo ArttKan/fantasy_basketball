@@ -31,3 +31,8 @@ def update_team(team_id, team_name, owner_id):
                             owner = ?
                             WHERE id = ?"""
     db.execute(sql, [team_name, owner_id, team_id])
+
+
+def delete_team(team_id):
+    sql = """DELETE FROM teams WHERE id = ?"""
+    db.execute(sql, [team_id])
