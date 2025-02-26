@@ -22,9 +22,10 @@
 
 <p>
     <a href="/add_team">Add Team</a>
+    <a href="/find_team">Search for a Team</a>
 </p>
 
-    <h2>Teams in the league</h2
+    <h2>Teams in the league</h2>
     <ul>
         {% for team in teams %}
         <li><a href="/team/{{ team.id }}">{{ team.team }}</a></li>

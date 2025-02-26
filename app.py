@@ -16,6 +16,11 @@ def index():
     return render_template("index.html", teams=all_teams)
 
 
+@app.route("/find_team")
+def find_team():
+    return render_template("find_team.html")
+
+
 @app.route("/register")
 def register():
     return render_template("register.html")
