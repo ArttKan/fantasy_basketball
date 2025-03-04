@@ -18,7 +18,10 @@ def index():
 
 @app.route("/find_team")
 def find_team():
-    return render_template("find_team.html")
+    query = request.args.get("query")
+    if not query:
+        query = ""
+    return render_template("find_team.html", query=query)
 
 
 @app.route("/register")
