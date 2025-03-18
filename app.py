@@ -95,14 +95,14 @@ def create():
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     if password1 != password2:
-        return "VIRHE: salasanat eivät ole samat"
+        return "ERROR: Passwords do not match"
     password_hash = generate_password_hash(password1)
 
     try:
         sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
         db.execute(sql, [username, password_hash])
     except sqlite3.IntegrityError:
-        return "VIRHE: tunnus on jo varattu"
+        return "ERROR: Username already in use"
 
     return render_template("registered.html")
 
@@ -126,7 +126,7 @@ def login():
             session["user_id"] = user_id
             return redirect("/")
         else:
-            return "VIRHE: väärä tunnus tai salasana"
+            return "ERROR: Incorrect username or password"
 
 
 @app.route("/logout")
