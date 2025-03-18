@@ -36,3 +36,10 @@ def update_team(team_id, team_name, owner_id):
 def delete_team(team_id):
     sql = """DELETE FROM teams WHERE id = ?"""
     db.execute(sql, [team_id])
+
+
+def find_teams(query):
+    sql = """SELECT id, team
+                FROM teams
+                WHERE team LIKE ?"""
+    return db.query(sql, ["%" + query + "%"])
