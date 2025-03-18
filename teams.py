@@ -23,7 +23,8 @@ def get_team(team_id):
                     users
                 WHERE teams.owner = users.id AND
                     teams.id = ?"""
-    return db.query(sql, [team_id])[0]
+    result = db.query(sql, [team_id])
+    return result[0] if result else None
 
 
 def update_team(team_id, team_name, owner_id):

@@ -35,6 +35,8 @@ def register():
 @app.route("/team/<int:team_id>")
 def show_team(team_id):
     team = teams.get_team(team_id)
+    if not team:
+        abort(404)
     return render_template("show_team.html", team=team)
 
 
@@ -56,6 +58,8 @@ def edit_team(team_id):
     team = teams.get_team(team_id)
     if team["owner"] != session["user_id"]:
         abort(403)
+    if not team:
+        abort(404)
     return render_template("edit_team.html", team=team)
 
 
@@ -65,6 +69,9 @@ def update_team():
     team = teams.get_team(team_id)
     if team["owner"] != session["user_id"]:
         abort(403)
+    if not team:
+        abort(404)
+
     team_id = request.form["team_id"]
     team_name = request.form["name"]
     owner_id = session["user_id"]
@@ -75,6 +82,9 @@ def update_team():
 @app.route("/delete_team/<int:team_id>", methods=["GET", "POST"])
 def delete_team(team_id):
     team = teams.get_team(team_id)
+    if not team:
+        abort(404)
+
     if team["owner"] != session["user_id"]:
         abort(403)
 
