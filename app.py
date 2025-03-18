@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import redirect, render_template, request, session
+from flask import abort, redirect, render_template, request, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
@@ -54,11 +54,17 @@ def create_team():
 @app.route("/edit_team/<int:team_id>")
 def edit_team(team_id):
     team = teams.get_team(team_id)
+    if team["owner"] != session["user_id"]:
+        abort(403)
     return render_template("edit_team.html", team=team)
 
 
 @app.route("/update_team", methods=["POST"])
 def update_team():
+    team_id = request.form["team_id"]
+    team = teams.get_team(team_id)
+    if team["owner"] != session["user_id"]:
+        abort(403)
     team_id = request.form["team_id"]
     team_name = request.form["name"]
     owner_id = session["user_id"]
@@ -68,8 +74,11 @@ def update_team():
 
 @app.route("/delete_team/<int:team_id>", methods=["GET", "POST"])
 def delete_team(team_id):
+    team = teams.get_team(team_id)
+    if team["owner"] != session["user_id"]:
+        abort(403)
+
     if request.method == "GET":
-        team = teams.get_team(team_id)
         return render_template("delete_team.html", team=team)
 
     if request.method == "POST":
