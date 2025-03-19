@@ -11,17 +11,22 @@
   <p>
     You are logged in as {{ session.username }}, user ID: {{ session.user_id }}
   </p>
+  <p>
+    <a href="/logout">Log out</a>
+  </p>
   {% endif %}
 
-
+  {% if not session.username %}
 <p>
     <a href="/login">Log in</a>
     <a href="/register">Register</a>
-    <a href="/logout">Log out</a>
 </p>
+{% endif %}
 
 <p>
+  {% if session.username %}
     <a href="/add_team">Add Team</a>
+  {% endif %}
     <a href="/find_team">Search for a Team</a>
 </p>
 

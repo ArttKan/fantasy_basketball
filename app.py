@@ -10,6 +10,11 @@ app = Flask(__name__)
 app.secret_key = config.secret_key
 
 
+def require_login():
+    if "user_id" not in session:
+        abort(403)
+
+
 @app.route("/")
 def index():
     all_teams = teams.get_teams()
@@ -42,11 +47,13 @@ def show_team(team_id):
 
 @app.route("/add_team")
 def add_team():
+    require_login()
     return render_template("add_team.html")
 
 
 @app.route("/create_team", methods=["POST"])
 def create_team():
+    require_login()
     team_name = request.form["name"]
     owner_id = session["user_id"]
     teams.add_team(team_name, owner_id)
@@ -55,6 +62,7 @@ def create_team():
 
 @app.route("/edit_team/<int:team_id>")
 def edit_team(team_id):
+    require_login()
     team = teams.get_team(team_id)
     if team["owner"] != session["user_id"]:
         abort(403)
@@ -65,6 +73,7 @@ def edit_team(team_id):
 
 @app.route("/update_team", methods=["POST"])
 def update_team():
+    require_login()
     team_id = request.form["team_id"]
     team = teams.get_team(team_id)
     if team["owner"] != session["user_id"]:
@@ -81,6 +90,7 @@ def update_team():
 
 @app.route("/delete_team/<int:team_id>", methods=["GET", "POST"])
 def delete_team(team_id):
+    require_login()
     team = teams.get_team(team_id)
     if not team:
         abort(404)
@@ -141,6 +151,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    del session["username"]
-    del session["user_id"]
+    if "user_id" in session:
+        del session["username"]
+        del session["user_id"]
     return redirect("/")
