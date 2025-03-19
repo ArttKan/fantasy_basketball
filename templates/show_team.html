@@ -13,8 +13,10 @@
         <a href="/delete_team/{{ team.id }}">Delete team</a>
     </p>
     {% endif %}
-    <h2>{{ team.id }}</h2>
-    <p>{{ team.owner }}</p>
+    <h2>Team ID: {{ team.id }}</h2>
+    <p>
+      Owner: <a href="/user/{{ team.owner }}">{{ owner.username }}</a>
+    </p>
     <p>Record: W-L</p>
     <p>
       <a href="/">Back</a>

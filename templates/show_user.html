@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{ user.username }}</title>
+</head>
+
+<body>
+    <h1>{{ user.username }}</h1>
+    {% if session.user_id == user.id  %}
+    <p>
+        <a href="">Edit user</a>
+        <a href="">Delete user</a>
+    </p>
+    {% endif %}
+    <h2>ID: {{ user.id }}</h2>
+    <p>
+      Teams ({{ teams | count }}):
+      {% for team in teams %}
+      <li><a href="/team/{{ team.id }}">{{ team.team }}</a></li>
+      {% endfor %}
+    </p>
+    <p>
+      <a href="/">Back</a>
+    </p>
+</body>
+
+</html>

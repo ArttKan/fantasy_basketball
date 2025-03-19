@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
 import teams
+import users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -19,6 +20,15 @@ def require_login():
 def index():
     all_teams = teams.get_teams()
     return render_template("index.html", teams=all_teams)
+
+
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user = users.get_user(user_id)
+    teams = users.get_teams(user_id)
+    if not user:
+        abort(404)
+    return render_template("show_user.html", user=user, teams=teams)
 
 
 @app.route("/find_team")
@@ -40,9 +50,10 @@ def register():
 @app.route("/team/<int:team_id>")
 def show_team(team_id):
     team = teams.get_team(team_id)
+    owner = teams.get_owner_name(team_id)
     if not team:
         abort(404)
-    return render_template("show_team.html", team=team)
+    return render_template("show_team.html", team=team, owner=owner)
 
 
 @app.route("/add_team")

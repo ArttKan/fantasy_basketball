@@ -44,3 +44,11 @@ def find_teams(query):
                 FROM teams
                 WHERE team LIKE ?"""
     return db.query(sql, ["%" + query + "%"])
+
+
+def get_owner_name(team_id):
+    sql = """SELECT users.username
+                FROM users, teams
+                WHERE teams.owner = users.id AND
+                teams.id = ?"""
+    return db.query(sql, [team_id])[0]
