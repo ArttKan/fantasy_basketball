@@ -78,14 +78,17 @@ def update_team():
     require_login()
     team_id = request.form["team_id"]
     team = teams.get_team(team_id)
+    team_id = request.form["team_id"]
+    team_name = request.form["name"]
+    owner_id = session["user_id"]
+
+    if not team_name or len(team_name) > 50:
+        abort(403)
     if team["owner"] != session["user_id"]:
         abort(403)
     if not team:
         abort(404)
 
-    team_id = request.form["team_id"]
-    team_name = request.form["name"]
-    owner_id = session["user_id"]
     teams.update_team(team_id, team_name, owner_id)
     return redirect("/team/" + str(team_id))
 

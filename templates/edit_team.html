@@ -10,11 +10,11 @@
   <form action="/update_team" method="post">
     <p>
       Team Name: <br />
-      <input type="text" name="name" value="{{ team.team }}"/>
+      <input type="text" name="name" value="{{ team.team }}" maxlength="50" required/>
     </p>
     <p>
         Owner: <br />
-        <input type="text" name="owner" value="{{ team.owner }}" />
+        <input type="text" name="owner" value="{{ team.owner }}" required/>
     </p>
     </p>
     <input type="hidden" name="team_id" value="{{ team.id }}" />
