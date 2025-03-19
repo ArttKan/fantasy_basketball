@@ -55,6 +55,8 @@ def add_team():
 def create_team():
     require_login()
     team_name = request.form["name"]
+    if not team_name or len(team_name) > 50:
+        abort(403)
     owner_id = session["user_id"]
     teams.add_team(team_name, owner_id)
     return redirect("/")
