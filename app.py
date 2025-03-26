@@ -155,6 +155,28 @@ def show_player(player_id):
     return render_template("show_player.html", player=player, team=team)
 
 
+@app.route("/delete_player/<int:player_id>", methods=["GET", "POST"])
+def delete_player(player_id):
+    require_login()
+    player = players.get_player(player_id)
+    team = players.get_team(player_id)
+    if not player:
+        abort(404)
+
+    if team["owner"] != session["user_id"]:
+        abort(403)
+
+    if request.method == "GET":
+        return render_template("delete_player.html", team=team, player=player)
+
+    if request.method == "POST":
+        if "delete" in request.form:
+            players.delete_player(player_id)
+            return redirect("/")
+        else:
+            return redirect("/")
+
+
 @app.route("/create", methods=["POST"])
 def create():
     username = request.form["username"]

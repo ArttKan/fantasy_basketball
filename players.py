@@ -45,3 +45,8 @@ def get_team(player_id):
                 ON teams.id = players.team_id
                 WHERE players.id = ?"""
     return db.query(sql, [player_id])[0]
+
+
+def delete_player(player_id):
+    sql = """DELETE FROM players WHERE id = ?"""
+    db.execute(sql, [player_id])
