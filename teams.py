@@ -14,6 +14,13 @@ def get_teams():
     return db.query(sql)
 
 
+def get_team_id(team_name):
+    sql = """SELECT teams.id
+                FROM teams
+                WHERE teams.team = ?"""
+    return db.query(sql, [team_name])[0][0]
+
+
 def get_team(team_id):
     sql = """SELECT teams.team,
                     teams.id,

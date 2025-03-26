@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Add a Player</title>
+</head>
+
+<body>
+  <h1>Add new player</h1>
+  {% if session.username %}
+  <form action="/create_player" method="post">
+    <p>
+      Player Name: <br />
+      <input type="text" name="name" maxlength="50" required/>
+    </p>
+    <p>
+        Team:
+        <select name="team">
+            <option value="">(choose a team)</option>
+            <option value="testi">testi</option>
+        </select>
+    </p>
+    <input type="submit" value="Create a new player" />
+  </form>
+  {% endif %}
+
+  {% if not session.username %}
+  <p>You must be logged in to add a player to the league.</p>
+  <p>
+    <a href="/register">To registration</a>
+  </p>
+  {% endif %}
+  <p>
+    <a href="/">Back</a>
+  </p>
+</body>
+
+</html>

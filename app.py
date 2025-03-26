@@ -5,6 +5,7 @@ import db
 import config
 import teams
 import users
+import players
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -18,7 +19,8 @@ def require_login():
 @app.route("/")
 def index():
     all_teams = teams.get_teams()
-    return render_template("index.html", teams=all_teams)
+    all_players = players.get_players()
+    return render_template("index.html", teams=all_teams, players=all_players)
 
 
 @app.route("/user/<int:user_id>")
@@ -122,6 +124,35 @@ def delete_team(team_id):
             return redirect("/")
         else:
             return redirect("/team/" + str(team_id))
+
+
+@app.route("/add_player")
+def add_player():
+    require_login()
+    return render_template("add_player.html")
+
+
+@app.route("/create_player", methods=["POST"])
+def create_player():
+    require_login()
+    player_name = request.form["name"]
+    team_name = request.form["team"]
+    team_id = teams.get_team_id(team_name)
+    if not player_name or len(player_name) > 50:
+        abort(403)
+    # static team id of 1 as get_team_id not working properly
+    players.add_player(player_name, team_id)
+    return redirect("/")
+
+
+@app.route("/player/<int:player_id>")
+def show_player(player_id):
+    player = players.get_player(player_id)
+    team = players.get_team(player_id)
+    print(team)
+    if not player:
+        abort(404)
+    return render_template("show_player.html", player=player, team=team)
 
 
 @app.route("/create", methods=["POST"])

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{ player.player }} {{ team.owner }}</title>
+</head>
+
+<body>
+    <h1>{{ player.player }}</h1>
+    {% if session.user_id == team.owner  %}
+    <p>
+        <a href="/delete_player/{{ player.id }}">Delete player</a>
+    </p>
+    {% endif %}
+    <h2>Player ID: {{ player.id }}</h2>
+    <p>
+      Team: <a href="/show_team/{{ team.id }}">{{ team.team }}</a>
+    </p>
+    <p>Record: W-L</p>
+    <p>
+      <a href="/">Back</a>
+    </p>
+</body>
+
+</html>
