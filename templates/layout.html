@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Fantasy Basketball</title>
+</head>
+
+<body>
+    <h1>Fantasy Basketball League</h1>
+
+<p>
+    <a href="/">Frontpage</a> |
+    {% if session.user_id %}
+    <a href="/logout">Log out</a> |
+    {% endif %}
+    {% if not session.user_id %}
+    <a href="/login">Log in</a> |
+    <a href="/register">Register</a> |
+    {% endif %}
+    <a href="/find_team">Search for a Team</a>
+    {% if session.user_id %}
+    | <a href="/add_team">Add Team</a> |
+    <a href="/add_player">Add Player</a>
+    {% endif %}
+</p>
+
+{% if session.user_id %}
+<p>
+  You are logged in as {{ session.username }}, user ID: {{ session.user_id }}
+</p>
+{% endif %}
+
+    {% block content %}{% endblock %}
+
+</body>
+
+</html>

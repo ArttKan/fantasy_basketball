@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Log in</title>
-</head>
+{% block title %}Log in{% endblock %}
 
-<body>
+{% block content %}
   {% if session.username %}
   <p>
     You are logged in as {{ session.username }}
@@ -29,6 +26,4 @@
   <p>
     <a href="/">Back</a>
   </p>
-</body>
-
-</html>
+{% endblock %}

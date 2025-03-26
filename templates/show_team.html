@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>{{ team.team }}</title>
-</head>
+{% block title %}{{ team.team }}{% endblock %}
 
-<body>
-    <h1>{{ team.team }}</h1>
+{% block content %}
+    <h2>{{ team.team }}</h2>
     {% if session.user_id == team.owner  %}
     <p>
         <a href="/edit_team/{{ team.id }}">Edit team</a>
@@ -21,6 +18,4 @@
     <p>
       <a href="/">Back</a>
     </p>
-</body>
-
-</html>
+{% endblock %}

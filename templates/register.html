@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Registration</title>
-</head>
+{% block title %}Register{% endblock %}
 
-<body>
+{% block content %}
   <form action="/create" method="post">
     <p>
       Username: <br />
@@ -24,6 +21,4 @@
   <p>
     <a href="/">Back</a>
   </p>
-</body>
-
-</html>
+{% endblock %}

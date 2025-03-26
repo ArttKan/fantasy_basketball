@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Add a Player</title>
-</head>
+{% block title %}Add new player{% endblock %}
 
-<body>
-  <h1>Add new player</h1>
+{% block content %}
+  <h2>Add new player</h2>
   {% if session.username %}
   <form action="/create_player" method="post">
     <p>
@@ -33,6 +30,4 @@
   <p>
     <a href="/">Back</a>
   </p>
-</body>
-
-</html>
+{% endblock %}

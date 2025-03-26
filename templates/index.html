@@ -1,50 +1,18 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Fantasy Basketball</title>
-</head>
+{% block title %}Fantasy Basketball League{% endblock %}
 
-<body>
-    <h1>Fantasy Basketball League</h1>
-  {% if session.username %}
-  <p>
-    You are logged in as {{ session.username }}, user ID: {{ session.user_id }}
-  </p>
-  <p>
-    <a href="/logout">Log out</a>
-  </p>
-  {% endif %}
-
-  {% if not session.username %}
-<p>
-    <a href="/login">Log in</a>
-    <a href="/register">Register</a>
-</p>
-{% endif %}
-
-<p>
-  {% if session.username %}
-    <a href="/add_team">Add Team</a>
-    <a href="/add_player">Add Player</a>
-  {% endif %}
-    <a href="/find_team">Search for a Team</a>
-</p>
-
-    <h2>Teams in the league</h2>
-    <ul>
-        {% for team in teams %}
-        <li><a href="/team/{{ team.id }}">{{ team.team }}</a></li>
-        {% endfor %}
-    </ul>
-    <h2>Players in the league</h2>
-    <ul>
-        {% for player in players %}
-        <li><a href="/player/{{ player.id }}">{{ player.player }}</a> <a href="/team/{{ player.team_id }}">{{ player.team }}</a> {{ player.pts }} pts|{{ player.reb }} reb|{{ player.ast }} ast in {{ player.gp }} games played</li>
-        {% endfor %}
-    </ul>
-    
-
-</body>
-
-</html>
+{% block content %}
+<h2>Teams in the league</h2>
+<ul>
+    {% for team in teams %}
+    <li><a href="/team/{{ team.id }}">{{ team.team }}</a></li>
+    {% endfor %}
+</ul>
+<h2>Players in the league</h2>
+<ul>
+    {% for player in players %}
+    <li><a href="/player/{{ player.id }}">{{ player.player }}</a> <a href="/team/{{ player.team_id }}">{{ player.team }}</a> {{ player.pts }} pts|{{ player.reb }} reb|{{ player.ast }} ast in {{ player.gp }} games played</li>
+    {% endfor %}
+</ul>
+{% endblock %}

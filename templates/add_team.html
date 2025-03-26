@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Add a Team</title>
-</head>
+{% block title %}Keskustelu{% endblock %}
 
-<body>
-  <h1>Add new team</h1>
+{% block content %}
+  <h2>Add new team</h2>
   {% if session.username %}
   <form action="/create_team" method="post">
     <p>
@@ -28,5 +25,4 @@
     <a href="/">Back</a>
   </p>
 </body>
-
-</html>
+{% endblock %}

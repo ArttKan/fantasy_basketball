@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Edit team</title>
-</head>
+{% block title %}Edit team{% endblock %}
 
-<body>
-  <h1>Edit team</h1>
+{% block content %}
+  <h2>Edit team</h2>
   <form action="/update_team" method="post">
     <p>
       Team Name: <br />
@@ -23,6 +20,4 @@
   <p>
     <a href="/team/{{ team.id }}">Back</a>
   </p>
-</body>
-
-</html>
+{% endblock %}

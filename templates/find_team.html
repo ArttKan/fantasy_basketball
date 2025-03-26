@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Search for a team</title>
-</head>
+{% block title %}Team search{% endblock %}
 
-<body>
-    <h1>Search for a team (later players too)</h1>
+{% block content %}
+    <h2>Search for a team</h2>
     <form action="/find_team" method="get">
         <p>
             Search for: <input type="text" name="query" value="{{ query }}">
@@ -26,6 +23,4 @@
         {% endfor %}
     </ul>
     {% endif %}
-</body>
-
-</html>
+{% endblock %}
