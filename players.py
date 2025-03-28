@@ -50,3 +50,10 @@ def get_team(player_id):
 def delete_player(player_id):
     sql = """DELETE FROM players WHERE id = ?"""
     db.execute(sql, [player_id])
+
+
+def update_player(player_id, player_name, team_id):
+    sql = """UPDATE players SET player = ?,
+                            team_id = ?
+                            WHERE id = ?"""
+    db.execute(sql, [player_name, team_id, player_id])

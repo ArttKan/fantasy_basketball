@@ -90,7 +90,6 @@ def update_team():
     require_login()
     team_id = request.form["team_id"]
     team = teams.get_team(team_id)
-    team_id = request.form["team_id"]
     team_name = request.form["name"]
     owner_id = session["user_id"]
 
@@ -129,18 +128,25 @@ def delete_team(team_id):
 @app.route("/add_player")
 def add_player():
     require_login()
-    return render_template("add_player.html")
+    all_teams = teams.get_teams()
+    return render_template("add_player.html", teams=all_teams)
 
 
 @app.route("/create_player", methods=["POST"])
 def create_player():
     require_login()
     player_name = request.form["name"]
-    team_name = request.form["team"]
-    team_id = teams.get_team_id(team_name)
+    team_id = request.form["team"]
+    team = teams.get_team(team_id)
+    all_teams = teams.get_teams()
     if not player_name or len(player_name) > 50:
         abort(403)
-    # static team id of 1 as get_team_id not working properly
+    if not team_id:
+        abort(403)
+    if team["owner"] != session["user_id"]:
+        abort(403)
+    if team not in all_teams:
+        abort(403)
     players.add_player(player_name, team_id)
     return redirect("/")
 
@@ -175,6 +181,36 @@ def delete_player(player_id):
             return redirect("/")
         else:
             return redirect("/")
+
+
+@app.route("/edit_player/<int:player_id>")
+def edit_player(player_id):
+    require_login()
+    p_team = players.get_team(player_id)
+    player = players.get_player(player_id)
+    all_teams = teams.get_teams()
+    if p_team["owner"] != session["user_id"]:
+        abort(403)
+    if not p_team:
+        abort(404)
+    return render_template("edit_player.html", p_team=p_team, player=player, all_teams=all_teams)
+
+
+@app.route("/update_player", methods=["POST"])
+def update_player():
+    require_login()
+    player_name = request.form["name"]
+    player_id = request.form["player_id"]
+    team_id = request.form["team"]
+    team = teams.get_team(team_id)
+    if not player_name or len(player_name) > 50:
+        abort(403)
+    if team["owner"] != session["user_id"]:
+        abort(403)
+    if not team:
+        abort(404)
+    players.update_player(player_id, player_name, team_id)
+    return redirect("/player/" + str(player_id))
 
 
 @app.route("/create", methods=["POST"])

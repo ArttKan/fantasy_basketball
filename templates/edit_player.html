@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit {{ player.player }}{% endblock %}
+
+{% block content %}
+  <h2>Edit {{ player.player }}</h2>
+  {% if session.username %}
+  <form action="/update_player" method="post">
+    <p>
+      Player Name: <br />
+      <input type="text" name="name" maxlength="50" required value="{{ player.player }}"/>
+      <input type="hidden" name="player_id" value="{{ player.id }}" />
+    </p>
+    <p>
+        Team: {{ p_team.team }}
+        <select name="team">
+        {% for option in all_teams %}
+            {% if p_team.team == option.team %}
+            <option value="{{ option.id }}" selected>{{ option.team }}</option>
+            {% elif option.owner == session.user_id %}
+            <option value="{{ option.id }}">{{ option.team }}</option>
+            {% else %}
+            {% endif %}
+        {% endfor %}
+        </select>
+    </p>
+    <input type="submit" value="Update player" />
+  </form>
+  {% endif %}
+  <p>
+    <a href="/">Back</a>
+  </p>
+{% endblock %}

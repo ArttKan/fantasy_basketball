@@ -4,7 +4,7 @@
 
 {% block content %}
   <h2>Add new player</h2>
-  {% if session.username %}
+  {% if session.user_id %}
   <form action="/create_player" method="post">
     <p>
       Player Name: <br />
@@ -14,14 +14,19 @@
         Team:
         <select name="team">
             <option value="">(choose a team)</option>
-            <option value="testi">testi</option>
+            {% for team in teams %}
+            {% if team.owner == session.user_id %}
+            <option value="{{ team.id }}">{{ team.team }}</option>
+            {% else %}
+            {% endif %}
+            {% endfor %}
         </select>
     </p>
     <input type="submit" value="Create a new player" />
   </form>
   {% endif %}
 
-  {% if not session.username %}
+  {% if not session.user_id %}
   <p>You must be logged in to add a player to the league.</p>
   <p>
     <a href="/register">To registration</a>

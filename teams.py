@@ -9,7 +9,8 @@ def add_team(team_name, owner_id):
 
 def get_teams():
     sql = """SELECT id,
-                    team
+                    team,
+                    owner
                 FROM teams"""
     return db.query(sql)
 

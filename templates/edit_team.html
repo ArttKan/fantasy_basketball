@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 
-{% block title %}Edit team{% endblock %}
+{% block title %}Edit {{ team.team }}{% endblock %}
 
 {% block content %}
-  <h2>Edit team</h2>
+  <h2>Edit {{ team.team }}</h2>
   <form action="/update_team" method="post">
     <p>
       Team Name: <br />

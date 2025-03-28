@@ -6,12 +6,13 @@
     <h2>{{ player.player }}</h2>
     {% if session.user_id == team.owner  %}
     <p>
+        <a href="/edit_player/{{ player.id }}">Edit player</a>
         <a href="/delete_player/{{ player.id }}">Delete player</a>
     </p>
     {% endif %}
     <h2>Player ID: {{ player.id }}</h2>
     <p>
-      Team: <a href="/show_team/{{ team.id }}">{{ team.team }}</a>
+      Team: <a href="/team/{{ team.id }}">{{ team.team }}</a>
     </p>
     <p>
       <a href="/">Back</a>
