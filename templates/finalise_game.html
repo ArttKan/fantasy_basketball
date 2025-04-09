@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}Finalise the game {{ home_team.team }} vs. {{ away_team.team }}{% endblock %}
+
+{% block content %}
+  <h2>Finalise the game {{ home_team.team }} vs. {{ away_team.team }}</h2>
+  <form action="/create_game" method="post">
+    <p>
+        Choose the winner of the game: <br />
+        <select name="winner">
+            <option value="">(choose a team)</option>
+            <option value="{{ home_team.id }}">{{ home_team.team }}</option>
+            <option value="{{ away_team.id }}">{{ away_team.team }}</option>
+        </select> 
+        <input type="hidden" name="home_team_id" value="{{ home_team.id }}" />
+        <input type="hidden" name="away_team_id" value="{{ away_team.id }}" />
+    </p>
+    <p>
+        Enter statistics for the players on {{ home_team.team }}: <br />
+        {% for player in home_players %}
+        <li>{{ player.player }} | <input type="text" name="{{ player.id }}_pts" id="{{ player.id }}_pts" size="3" pattern="[1-9][0-9]{0,3}" required /> pts| <input type="text" name="{{ player.id }}_reb" id="{{ player.id }}_reb" size="3" pattern="[1-9][0-9]{0,3}" required /> reb| <input type="text" name="{{ player.id }}_ast" id="{{ player.id }}_ast" size="3" pattern="[1-9][0-9]{0,3}" required /> ast</li>
+        {% endfor %}
+    </p>
+    <p>
+        Enter statistics for the players on {{ away_team.team }}: <br />
+        {% for player in away_players %}
+        <li>{{ player.player }} | <input type="text" name="{{ player.id }}_pts" id="{{ player.id }}_pts" size="3" pattern="[1-9][0-9]{0,3}" required /> pts| <input type="text" name="{{ player.id }}_reb" id="{{ player.id }}_reb" size="3" pattern="[1-9][0-9]{0,3}" required /> reb| <input type="text" name="{{ player.id }}_ast" id="{{ player.id }}_ast" size="3" pattern="[1-9][0-9]{0,3}" required /> ast</li>
+        {% endfor %}
+    </p>
+    <input type="submit" value="Finish playing the game" />
+  </form>
+</body>
+{% endblock %}

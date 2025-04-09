@@ -20,13 +20,14 @@
     <a href="/find_team">Search for a Team</a>
     {% if session.user_id %}
     | <a href="/add_team">Add Team</a> |
-    <a href="/add_player">Add Player</a>
+    <a href="/add_player">Add Player</a> |
+    <a href="/add_game">Add Game</a>
     {% endif %}
 </p>
 
 {% if session.user_id %}
 <p>
-  You are logged in as {{ session.username }}, user ID: {{ session.user_id }}
+  You are logged in as <a href="/user/{{ session.user_id }}">{{ session.username }}</a>, user ID: {{ session.user_id }}
 </p>
 {% endif %}
 

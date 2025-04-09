@@ -57,3 +57,12 @@ def update_player(player_id, player_name, team_id):
                             team_id = ?
                             WHERE id = ?"""
     db.execute(sql, [player_name, team_id, player_id])
+
+
+def update_stats(player_id, points, rebounds, assists):
+    sql = """UPDATE players SET pts = pts + ?,
+                            reb = reb + ?,
+                            ast = ast + ?,
+                            gp = gp + 1
+                            WHERE id = ?"""
+    db.execute(sql, [points, rebounds, assists, player_id])

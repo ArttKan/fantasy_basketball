@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}Add a game{% endblock %}
+
+{% block content %}
+  <h2>Add new game</h2>
+  {% if session.username %}
+  <form action="/finalise_game" method="post">
+    <p>
+        Choose your team to play in the game: <br />
+        <p>
+        Team:
+        <select name="away_team">
+            <option value="">(choose a team)</option>
+            {% for team in teams %}
+            {% if team.owner == session.user_id %}
+            <option value="{{ team.id }}">{{ team.team }}</option>
+            {% else %}
+            {% endif %}
+            {% endfor %}
+        </select>  
+        <p>
+        Choose another team to host the game: <br />
+        <p>
+        Team:
+        <select name="home_team">
+            <option value="">(choose a team)</option>
+            {% for team in teams %}
+            <option value="{{ team.id }}">{{ team.team }}</option>
+            {% endfor %}
+        </select>
+        </p>
+    </p>
+    <input type="submit" value="Create a new game" />
+  </form>
+  {% endif %}
+
+  {% if not session.username %}
+  <p>You must be logged in to play games in the league.</p>
+  <p>
+    <a href="/register">To registration</a>
+  </p>
+  {% endif %}
+  <p>
+    <a href="/">Back</a>
+  </p>
+</body>
+{% endblock %}

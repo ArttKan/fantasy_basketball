@@ -60,3 +60,16 @@ def get_owner_name(team_id):
                 WHERE teams.owner = users.id AND
                 teams.id = ?"""
     return db.query(sql, [team_id])[0]
+
+
+def get_players(team_id):
+    sql = """SELECT players.id,
+                    players.team_id,
+                    players.player,
+                    players.pts,
+                    players.ast,
+                    players.reb,
+                    players.gp
+                FROM players
+                WHERE players.team_id = ?"""
+    return db.query(sql, [team_id])

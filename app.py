@@ -1,11 +1,11 @@
 import sqlite3
 from flask import Flask
 from flask import abort, redirect, render_template, request, session
-import db
 import config
 import teams
 import users
 import players
+import games
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -20,7 +20,8 @@ def require_login():
 def index():
     all_teams = teams.get_teams()
     all_players = players.get_players()
-    return render_template("index.html", teams=all_teams, players=all_players)
+    all_games = games.get_games()
+    return render_template("index.html", teams=all_teams, players=all_players, games=all_games)
 
 
 @app.route("/user/<int:user_id>")
@@ -52,9 +53,10 @@ def register():
 def show_team(team_id):
     team = teams.get_team(team_id)
     owner = teams.get_owner_name(team_id)
+    players = teams.get_players(team_id)
     if not team:
         abort(404)
-    return render_template("show_team.html", team=team, owner=owner)
+    return render_template("show_team.html", team=team, owner=owner, players=players)
 
 
 @app.route("/add_team")
@@ -211,6 +213,51 @@ def update_player():
         abort(404)
     players.update_player(player_id, player_name, team_id)
     return redirect("/player/" + str(player_id))
+
+
+@app.route("/add_game")
+def add_game():
+    require_login()
+    all_teams = teams.get_teams()
+    return render_template("add_game.html", teams=all_teams)
+
+
+@app.route("/finalise_game", methods=["POST"])
+def finalise_game():
+    require_login()
+    home_team_id = int(request.form["home_team"])
+    away_team_id = int(request.form["away_team"])
+    if not home_team_id or not away_team_id:
+        abort(403)
+    home_team = teams.get_team(home_team_id)
+    away_team = teams.get_team(away_team_id)
+    home_players = teams.get_players(home_team_id)
+    away_players = teams.get_players(away_team_id)
+    return render_template("/finalise_game.html", home_team=home_team, away_team=away_team, home_players=home_players, away_players=away_players)
+
+
+@app.route("/create_game", methods=["POST"])
+def create_game():
+    require_login()
+    winner_id = request.form["winner"]
+    if not winner_id:
+        abort(403)
+    home_team_id = int(request.form["home_team_id"])
+    away_team_id = int(request.form["away_team_id"])
+    games.post_result(home_team_id, away_team_id, winner_id)
+    home_players = teams.get_players(home_team_id)
+    away_players = teams.get_players(away_team_id)
+    for player in home_players:
+        pts = request.form[str(player["id"]) + "_pts"]
+        reb = request.form[str(player["id"]) + "_reb"]
+        ast = request.form[str(player["id"]) + "_ast"]
+        players.update_stats(player["id"], pts, reb, ast)
+    for player in away_players:
+        pts = request.form[str(player["id"]) + "_pts"]
+        reb = request.form[str(player["id"]) + "_reb"]
+        ast = request.form[str(player["id"]) + "_ast"]
+        players.update_stats(player["id"], pts, reb, ast)
+    return redirect("/")
 
 
 @app.route("/create", methods=["POST"])
