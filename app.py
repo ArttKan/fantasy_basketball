@@ -6,9 +6,15 @@ import teams
 import users
 import players
 import games
+import secrets
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+
+def check_csrf():
+    if request.form["csrf_token"] != session["csrf_token"]:
+        abort(403)
 
 
 def require_login():
@@ -93,6 +99,7 @@ def add_team():
 @app.route("/create_team", methods=["POST"])
 def create_team():
     require_login()
+    check_csrf()
     team_name = request.form["name"]
     if not team_name or len(team_name) > 50:
         abort(403)
@@ -104,6 +111,7 @@ def create_team():
 @app.route("/edit_team/<int:team_id>")
 def edit_team(team_id):
     require_login()
+    check_csrf()
     team = teams.get_team(team_id)
     if team["owner"] != session["user_id"]:
         abort(403)
@@ -134,6 +142,7 @@ def update_team():
 @app.route("/delete_team/<int:team_id>", methods=["GET", "POST"])
 def delete_team(team_id):
     require_login()
+    check_csrf()
     team = teams.get_team(team_id)
     if not team:
         abort(404)
@@ -155,6 +164,7 @@ def delete_team(team_id):
 @app.route("/add_player")
 def add_player():
     require_login()
+    check_csrf()
     all_teams = teams.get_teams()
     return render_template("add_player.html", teams=all_teams)
 
@@ -191,6 +201,7 @@ def show_player(player_id):
 @app.route("/delete_player/<int:player_id>", methods=["GET", "POST"])
 def delete_player(player_id):
     require_login()
+    check_csrf()
     player = players.get_player(player_id)
     team = players.get_team(player_id)
     if not player:
@@ -250,6 +261,7 @@ def add_game():
 @app.route("/finalise_game", methods=["POST"])
 def finalise_game():
     require_login()
+    check_csrf()
     home_team_id = int(request.form["home_team"])
     away_team_id = int(request.form["away_team"])
     if home_team_id == away_team_id:
@@ -266,6 +278,7 @@ def finalise_game():
 @app.route("/create_game", methods=["POST"])
 def create_game():
     require_login()
+    check_csrf()
     winner_id = request.form["winner"]
     if not winner_id:
         abort(403)
@@ -317,6 +330,7 @@ def login():
         if user_id:
             session["username"] = username
             session["user_id"] = user_id
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             return "ERROR: Incorrect username or password"

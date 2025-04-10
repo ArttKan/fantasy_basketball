@@ -14,6 +14,7 @@
         <input type="text" name="owner" value="{{ team.owner }}" required/>
     </p>
     </p>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="hidden" name="team_id" value="{{ team.id }}" />
     <input type="submit" value="Update team" />
   </form>

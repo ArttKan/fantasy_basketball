@@ -11,6 +11,7 @@
       <input type="text" name="name" maxlength="50" required/>
     </p>
     </p>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Create a new team" />
   </form>
   {% endif %}
