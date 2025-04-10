@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+    <h2>Search for a team</h2>
+    <form action="/find_entity" method="get">
+        <p>
+            Search for: <input type="text" name="team_query" value="{{ query }}">
+        </p>
+        <input type="submit" value="Search">
+    </form>
+
+    <p>
+        <a href="/">Back</a>
+    </p>
+
+
+    <h2>Search for a player</h2>
+    <form action="/find_entity" method="get">
+        <p>
+            Search for: <input type="text" name="player_query" value="{{ query }}">
+        </p>
+        <input type="submit" value="Search">
+    </form>
+
+    <p>
+        <a href="/">Back</a>
+    </p>
+    {% if team_query %}
+    <h2>Results</h2>
+    <ul>
+        {% for result in team_results %}
+        <li><a href="/team/{{ result.id }}">{{ result.team }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if player_query %}
+    <h2>Results</h2>
+    <ul>
+        {% for result in player_results %}
+        <li><a href="/player/{{ result.id }}">{{ result.player }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}

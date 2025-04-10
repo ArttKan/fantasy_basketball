@@ -66,3 +66,15 @@ def update_stats(player_id, points, rebounds, assists):
                             gp = gp + 1
                             WHERE id = ?"""
     db.execute(sql, [points, rebounds, assists, player_id])
+
+
+def find_players(query):
+    sql = """SELECT id,
+                    player,
+                    pts,
+                    ast,
+                    reb,
+                    gp
+                FROM players
+                WHERE player LIKE ?"""
+    return db.query(sql, ["%" + query + "%"])

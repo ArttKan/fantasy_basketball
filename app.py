@@ -20,8 +20,24 @@ def require_login():
 def index():
     all_teams = teams.get_teams()
     all_players = players.get_players()
-    all_games = games.get_games()
-    return render_template("index.html", teams=all_teams, players=all_players, games=all_games)
+    all_games_id = games.get_games()
+    all_games = []
+    all_teams_with_record = []
+    for team in all_teams:
+        wins = teams.get_wins(team["id"])
+        total_games = teams.get_games(team["id"])
+        losses = total_games - wins
+        all_teams_with_record.append(
+            (team["id"], team["team"], wins, losses))
+    for game in all_games_id:
+        home = teams.get_team(game["home_id"])
+        away = teams.get_team(game["away_id"])
+        winner = teams.get_team(game["winner_id"])
+        game = (home["team"], home["id"], away["team"],
+                away["id"], winner["team"], winner["id"])
+        all_games.append(game)
+    all_teams_with_record.sort(key=lambda x: x[2], reverse=True)
+    return render_template("index.html", teams=all_teams_with_record, players=all_players, games=all_games)
 
 
 @app.route("/user/<int:user_id>")
@@ -33,15 +49,21 @@ def show_user(user_id):
     return render_template("show_user.html", user=user, teams=teams)
 
 
-@app.route("/find_team")
-def find_team():
-    query = request.args.get("query")
-    if query:
-        results = teams.find_teams(query)
+@app.route("/find_entity")
+def find_entity():
+    team_query = request.args.get("team_query")
+    player_query = request.args.get("player_query")
+    if team_query:
+        team_results = teams.find_teams(team_query)
     else:
-        query = ""
-        results = []
-    return render_template("find_team.html", query=query, results=results)
+        team_query = ""
+        team_results = []
+    if player_query:
+        player_results = players.find_players(player_query)
+    else:
+        player_query = ""
+        player_results = []
+    return render_template("find_entity.html", team_query=team_query, player_query=player_query, player_results=player_results, team_results=team_results)
 
 
 @app.route("/register")
@@ -54,9 +76,12 @@ def show_team(team_id):
     team = teams.get_team(team_id)
     owner = teams.get_owner_name(team_id)
     players = teams.get_players(team_id)
+    wins = teams.get_wins(team_id)
+    total_games = teams.get_games(team_id)
+    losses = total_games - wins
     if not team:
         abort(404)
-    return render_template("show_team.html", team=team, owner=owner, players=players)
+    return render_template("show_team.html", wins=wins, team=team, owner=owner, players=players, losses=losses)
 
 
 @app.route("/add_team")
@@ -227,6 +252,8 @@ def finalise_game():
     require_login()
     home_team_id = int(request.form["home_team"])
     away_team_id = int(request.form["away_team"])
+    if home_team_id == away_team_id:
+        abort(403, "You must choose two different teams!")
     if not home_team_id or not away_team_id:
         abort(403)
     home_team = teams.get_team(home_team_id)

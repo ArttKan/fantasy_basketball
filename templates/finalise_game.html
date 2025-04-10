@@ -18,13 +18,13 @@
     <p>
         Enter statistics for the players on {{ home_team.team }}: <br />
         {% for player in home_players %}
-        <li>{{ player.player }} | <input type="text" name="{{ player.id }}_pts" id="{{ player.id }}_pts" size="3" pattern="[1-9][0-9]{0,3}" required /> pts| <input type="text" name="{{ player.id }}_reb" id="{{ player.id }}_reb" size="3" pattern="[1-9][0-9]{0,3}" required /> reb| <input type="text" name="{{ player.id }}_ast" id="{{ player.id }}_ast" size="3" pattern="[1-9][0-9]{0,3}" required /> ast</li>
+        <li>{{ player.player }} | <input type="text" value="0" name="{{ player.id }}_pts" id="{{ player.id }}_pts" size="3" pattern="([1-9][0-9]{0,3}|0)" required /> pts| <input type="text" value="0" name="{{ player.id }}_reb" id="{{ player.id }}_reb" size="3" pattern="([1-9][0-9]{0,3}|0)" required /> reb| <input type="text" value="0" name="{{ player.id }}_ast" id="{{ player.id }}_ast" size="3" pattern="([1-9][0-9]{0,3}|0)" required /> ast</li>
         {% endfor %}
     </p>
     <p>
         Enter statistics for the players on {{ away_team.team }}: <br />
         {% for player in away_players %}
-        <li>{{ player.player }} | <input type="text" name="{{ player.id }}_pts" id="{{ player.id }}_pts" size="3" pattern="[1-9][0-9]{0,3}" required /> pts| <input type="text" name="{{ player.id }}_reb" id="{{ player.id }}_reb" size="3" pattern="[1-9][0-9]{0,3}" required /> reb| <input type="text" name="{{ player.id }}_ast" id="{{ player.id }}_ast" size="3" pattern="[1-9][0-9]{0,3}" required /> ast</li>
+        <li>{{ player.player }} | <input type="text" value="0" name="{{ player.id }}_pts" id="{{ player.id }}_pts" size="3" pattern="([1-9][0-9]{0,3}|0)" required /> pts| <input type="text" value="0" name="{{ player.id }}_reb" id="{{ player.id }}_reb" size="3" pattern="([1-9][0-9]{0,3}|0)" required /> reb| <input type="text" value="0" name="{{ player.id }}_ast" id="{{ player.id }}_ast" size="3" pattern="([1-9][0-9]{0,3}|0)" required /> ast</li>
         {% endfor %}
     </p>
     <input type="submit" value="Finish playing the game" />

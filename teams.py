@@ -73,3 +73,22 @@ def get_players(team_id):
                 FROM players
                 WHERE players.team_id = ?"""
     return db.query(sql, [team_id])
+
+
+def get_wins(team_id):
+    sql = """SELECT COUNT(winner_id)
+                FROM games
+                WHERE winner_id = ?"""
+    return db.query(sql, [team_id])[0][0]
+
+
+def get_games(team_id):
+    sql = """SELECT COUNT(home_id)
+                FROM games
+                WHERE home_id = ?"""
+    home = db.query(sql, [team_id])[0][0]
+    sql = """SELECT COUNT(away_id)
+            FROM games
+            WHERE away_id = ?"""
+    away = db.query(sql, [team_id])[0][0]
+    return home + away
