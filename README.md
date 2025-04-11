@@ -2,7 +2,7 @@
 ## Functionality
 A "Fantasy Basketball" application that allows users to simulate basketball games in a basketball league.
 Functionalities include:
-- user login and registration
+- user login and registration (the default dataset includes an admin user with password 'admin')
 - adding teams, players in teams and games between teams
 - tracking statistics of players and records of teams
 - editing and deleting players and teams
