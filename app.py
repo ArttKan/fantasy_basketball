@@ -111,7 +111,6 @@ def create_team():
 @app.route("/edit_team/<int:team_id>")
 def edit_team(team_id):
     require_login()
-    check_csrf()
     team = teams.get_team(team_id)
     if team["owner"] != session["user_id"]:
         abort(403)
@@ -123,6 +122,7 @@ def edit_team(team_id):
 @app.route("/update_team", methods=["POST"])
 def update_team():
     require_login()
+    check_csrf()
     team_id = request.form["team_id"]
     team = teams.get_team(team_id)
     team_name = request.form["name"]
@@ -142,8 +142,8 @@ def update_team():
 @app.route("/delete_team/<int:team_id>", methods=["GET", "POST"])
 def delete_team(team_id):
     require_login()
-    check_csrf()
     team = teams.get_team(team_id)
+    print(team_id)
     if not team:
         abort(404)
 
@@ -164,7 +164,6 @@ def delete_team(team_id):
 @app.route("/add_player")
 def add_player():
     require_login()
-    check_csrf()
     all_teams = teams.get_teams()
     return render_template("add_player.html", teams=all_teams)
 
@@ -172,18 +171,23 @@ def add_player():
 @app.route("/create_player", methods=["POST"])
 def create_player():
     require_login()
+    check_csrf()
     player_name = request.form["name"]
     team_id = request.form["team"]
     team = teams.get_team(team_id)
     all_teams = teams.get_teams()
+    all_team_ids = []
+    print(team)
+    for team in all_teams:
+        all_team_ids.append(team["id"])
     if not player_name or len(player_name) > 50:
-        abort(403)
+        abort(403, "Invalid player name")
     if not team_id:
-        abort(403)
+        abort(403, "You must choose team for the player")
     if team["owner"] != session["user_id"]:
-        abort(403)
-    if team not in all_teams:
-        abort(403)
+        abort(403, "You must choose a team you own")
+    if team["id"] not in all_team_ids:
+        abort(403, "You must choose an existing team")
     players.add_player(player_name, team_id)
     return redirect("/")
 
@@ -192,7 +196,6 @@ def create_player():
 def show_player(player_id):
     player = players.get_player(player_id)
     team = players.get_team(player_id)
-    print(team)
     if not player:
         abort(404)
     return render_template("show_player.html", player=player, team=team)
@@ -201,7 +204,6 @@ def show_player(player_id):
 @app.route("/delete_player/<int:player_id>", methods=["GET", "POST"])
 def delete_player(player_id):
     require_login()
-    check_csrf()
     player = players.get_player(player_id)
     team = players.get_team(player_id)
     if not player:
@@ -281,7 +283,7 @@ def create_game():
     check_csrf()
     winner_id = request.form["winner"]
     if not winner_id:
-        abort(403)
+        abort(403, "You must choose a winner for the game")
     home_team_id = int(request.form["home_team_id"])
     away_team_id = int(request.form["away_team_id"])
     games.post_result(home_team_id, away_team_id, winner_id)

@@ -12,17 +12,20 @@ CREATE TABLE teams (
 
 CREATE TABLE players (
     id INTEGER PRIMARY KEY,
-    team_id INTEGER REFERENCES teams,
+    team_id INTEGER,
     player TEXT,
     gp INTEGER,
     pts INTEGER,
     reb INTEGER,
-    ast INTEGER
+    ast INTEGER,
+    FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE
 );
 
 CREATE TABLE games (
     id INTEGER PRIMARY KEY,
-    home_id INTEGER REFERENCES teams,
-    away_id INTEGER REFERENCES teams,
-    winner_id INTEGER REFERENCES teams
+    home_id INTEGER ,
+    away_id INTEGER,
+    winner_id INTEGER,
+    FOREIGN KEY (home_id) REFERENCES teams(id) ON DELETE CASCADE,
+    FOREIGN KEY (away_id) REFERENCES teams(id) ON DELETE CASCADE
 );
