@@ -7,10 +7,9 @@ db.execute("DELETE FROM users")
 db.execute("DELETE FROM games")
 db.execute("DELETE FROM teams")
 db.execute("DELETE FROM players")
-print("jee")
 user_count = 1000
-team_count = 10**5
-player_count = 10**6
+team_count = 10**4
+player_count = 10**4
 game_count = 10**4
 
 for i in range(1, user_count + 1):
@@ -40,4 +39,3 @@ for i in range(1, game_count + 1):
                [home_id, away_id, random.choice([home_id, away_id])])
 db.commit()
 db.close()
-print("jee")

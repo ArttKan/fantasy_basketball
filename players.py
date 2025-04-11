@@ -78,3 +78,8 @@ def find_players(query):
                 FROM players
                 WHERE player LIKE ?"""
     return db.query(sql, ["%" + query + "%"])
+
+
+def player_count():
+    sql = """COUNT(*) FROM players"""
+    return db.query(sql)

@@ -92,3 +92,8 @@ def get_games(team_id):
             WHERE away_id = ?"""
     away = db.query(sql, [team_id])[0][0]
     return home + away
+
+
+def teams_count():
+    sql = """COUNT(*) FROM teams"""
+    return db.query(sql)

@@ -13,3 +13,8 @@ def get_games():
                     winner_id
                 FROM games"""
     return db.query(sql)
+
+
+def games_count():
+    sql = """COUNT(*) FROM games"""
+    return db.query(sql)

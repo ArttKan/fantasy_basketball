@@ -42,7 +42,7 @@ def index():
         game = (home["team"], home["id"], away["team"],
                 away["id"], winner["team"], winner["id"])
         all_games.append(game)
-    all_teams_with_record.sort(key=lambda x: x[2], reverse=True)
+    all_teams_with_record.sort(key=lambda x: (-x[2], x[3]))
     return render_template("index.html", teams=all_teams_with_record, players=all_players, games=all_games)
 
 
