@@ -56,9 +56,9 @@ team_id_counter = 0
 for player_list in player_lists:
     team_id_counter += 1
     for player in player_list:
-        sql = "INSERT INTO players (team_id, player, gp, pts, reb, ast) VALUES (?, ?, 9, ?, ?, ?)"
+        sql = "INSERT INTO players (team_id, player, gp, pts, reb, ast) VALUES (?, ?, 18, ?, ?, ?)"
         db.execute(sql, [team_id_counter, player, random.randint(
-            0, 270), random.randint(0, 200), random.randint(0, 100)])
+            10, 500), random.randint(10, 35), random.randint(5, 200)])
 
 team_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 for i in team_ids:

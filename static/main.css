@@ -1,0 +1,18 @@
+body {
+  margin: auto;
+  max-width: 50em;
+  font-family: sans-serif;
+  background-color: rgb(204, 154, 61);
+}
+
+.column {
+    border: 2px solid black;
+    margin: 1em;
+    padding: 0.2em 0.5em;
+}
+
+.item {
+    background-color: red;
+}
+
+
