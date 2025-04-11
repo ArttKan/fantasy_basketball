@@ -18,7 +18,11 @@ Functionalities include:
  Initialise the database with:  
   ```
 sqlite3 database.db < schema.sql
-sqlite3 database.db < init.sql
+python -m init_seed
+ ```
+ Enter the virtual environment with:  
+ ```
+ source venv/bin/activate
  ```
  Run the application with:  
   ```
