@@ -1,4 +1,4 @@
-# fantasy_basketball
+# Fantasy Basketball
 ## Functionality
 A "Fantasy Basketball" application that allows users to simulate basketball games in a basketball league.
 Functionalities include:
@@ -7,9 +7,9 @@ Functionalities include:
 - tracking statistics of players and records of teams
 - editing and deleting players and teams
 - display of teams, players and games
- ## Testing with large datasets
+ ## Testing with Large Datasets
  In the repository there is a seed.py script that generates a large amount of all data items. The application remains functional but slow and impractical. Loading the main page takes around 15 seconds with the generated dataset. Paging or indexing is not found in this application so no comparison times with more efficient solutions is available.
- ## Installing the application
+ ## Installing the Application
  Clone the repository to your directory of choice.  
  Install `flask` with:
  ```
