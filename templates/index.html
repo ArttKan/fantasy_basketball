@@ -3,13 +3,25 @@
 {% block title %}Fantasy Basketball League{% endblock %}
 
 {% block content %}
-<div class="column">
-<h2>Teams in the league</h2>
-    {% for team in teams %}
-    <div class="item">{{ team[2] }}-{{ team[3] }} <a href="/team/{{ team[0] }}">{{ team[1] }}</a></div>
-    {% endfor %}
+<div class="row">
+    <div class="column">
+        <h2>Teams in the league</h2>
+        {% for team in teams %}
+        <div class="item">{{ team[2] }}-{{ team[3] }} <a href="/team/{{ team[0] }}">{{ team[1] }}</a></div>
+        {% endfor %}
+    </div>
+    <div class="column">
+        <h2>Games played in the league (Winners in bold)</h2>
+        {% for game in games %}
+        {% if game[5] == game[1] %}
+        <div class="item"><a href="/team/{{ game[1] }}"><b>{{ game[0] }}</b></a> vs. <a href="/team/{{ game[3] }}">{{ game[2] }}</a></div>
+        {% else %}
+        <div class="item"><a href="/team/{{ game[1] }}">{{ game[0] }}</a> vs. <a href="/team/{{ game[3] }}"><b>{{ game[2] }}</b></a></div>
+        {% endif %}
+        {% endfor %}
+    </div>
 </div>
-<div class="column">
+<div class="full-column">
 <h2>Players in the league</h2>
     {% for player in players %}
     {% if player.gp == 0%}
@@ -19,15 +31,5 @@
     {% endif %}
     {% endfor %}
 </div>
-<div class="column">
-<h2>Games played in the league (Winners in bold)</h2>
-    <div class="item">
-    {% for game in games %}
-    {% if game[5] == game[1] %}
-    <div class="item"><a href="/team/{{ game[1] }}"><b>{{ game[0] }}</b></a> vs. <a href="/team/{{ game[3] }}">{{ game[2] }}</a></div>
-    {% else %}
-    <div class="item"><a href="/team/{{ game[1] }}">{{ game[0] }}</a> vs. <a href="/team/{{ game[3] }}"><b>{{ game[2] }}</b></a></div>
-    {% endif %}
-    {% endfor %}
-</div>
+
 {% endblock %}

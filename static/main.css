@@ -1,18 +1,52 @@
+h1 {
+    background-color: brown;
+}
+
 body {
   margin: auto;
   max-width: 50em;
   font-family: sans-serif;
-  background-color: rgb(204, 154, 61);
+  background-color: rgb(252, 204, 117);
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .column {
-    border: 2px solid black;
-    margin: 1em;
-    padding: 0.2em 0.5em;
+    flex: 1;
+    min-width: 300px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.full-column {
+    width: 100%;
+    margin-top: 20px;
 }
 
 .item {
-    background-color: red;
+    background-color: rgb(221, 66, 66);
+    margin: 0.5em;
+    padding:var() 0.2em 0.2em;
 }
 
+.navigation{
+    background-color: brown;
+}
+
+a:link {
+    color: black;
+    text-decoration: none;
+}
+
+a:visited {
+    color: black;
+}
+
+a:hover {
+    color: rgb(204, 154, 61);
+}
 
