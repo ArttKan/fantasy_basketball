@@ -26,15 +26,16 @@
     <a href="/add_game">Add Game</a>
     {% endif %}
 </p>
-</div>
+
 
 {% if session.user_id %}
 <p>
-  You are logged in as <a href="/user/{{ session.user_id }}">{{ session.username }}</a>, user ID: {{ session.user_id }}
+  You are logged in as <a href="/user/{{ session.user_id }}">{{ session.username }}</a>
 </p>
 {% endif %}
+</div>
 
-    {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 
 </body>
 

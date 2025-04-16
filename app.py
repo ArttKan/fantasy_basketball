@@ -26,7 +26,7 @@ def require_login():
 def index():
     all_teams = teams.get_teams()
     all_players = players.get_players()
-    all_games_id = games.get_games()
+    all_games_id = games.get_latest_games()
     all_games = []
     all_teams_with_record = []
     for team in all_teams:
@@ -101,6 +101,11 @@ def create_team():
     require_login()
     check_csrf()
     team_name = request.form["name"]
+    all_team_names = []
+    for i in teams.get_all_names():
+        all_team_names.append(i[0])
+    if team_name in all_team_names:
+        abort(403, "Team name already in use!")
     if not team_name or len(team_name) > 50:
         abort(403)
     owner_id = session["user_id"]
@@ -127,7 +132,11 @@ def update_team():
     team = teams.get_team(team_id)
     team_name = request.form["name"]
     owner_id = session["user_id"]
-
+    all_team_names = []
+    for i in teams.get_all_names():
+        all_team_names.append(i[0])
+    if team_name in all_team_names:
+        abort(403, "Team name already in use!")
     if not team_name or len(team_name) > 50:
         abort(403)
     if team["owner"] != session["user_id"]:
@@ -177,17 +186,21 @@ def create_player():
     team = teams.get_team(team_id)
     all_teams = teams.get_teams()
     all_team_ids = []
-    print(team)
+    all_player_names = []
+    for i in players.get_all_names():
+        all_player_names.append(i[0])
+    if player_name in all_player_names:
+        abort(403, "Player name already in use!")
     for team in all_teams:
         all_team_ids.append(team["id"])
-    if not player_name or len(player_name) > 50:
-        abort(403, "Invalid player name")
+    if not player_name or len(player_name) > 50 or len(player_name) < 5:
+        abort(403, "Invalid player name!")
     if not team_id:
-        abort(403, "You must choose team for the player")
+        abort(403, "You must choose a team for the player!")
     if team["owner"] != session["user_id"]:
-        abort(403, "You must choose a team you own")
+        abort(403, "You must choose a team you own!")
     if team["id"] not in all_team_ids:
-        abort(403, "You must choose an existing team")
+        abort(403, "You must choose an existing team!")
     players.add_player(player_name, team_id)
     return redirect("/")
 
@@ -243,6 +256,11 @@ def update_player():
     player_id = request.form["player_id"]
     team_id = request.form["team"]
     team = teams.get_team(team_id)
+    all_player_names = []
+    for i in players.get_all_names():
+        all_player_names.append(i[0])
+    if player_name in all_player_names:
+        abort(403, "Player name already in use!")
     if not player_name or len(player_name) > 50:
         abort(403)
     if team["owner"] != session["user_id"]:

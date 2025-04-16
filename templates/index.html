@@ -5,18 +5,19 @@
 {% block content %}
 <div class="row">
     <div class="column">
-        <h2>Teams in the league</h2>
+        <h2>Teams in the League</h2>
         {% for team in teams %}
-        <div class="item">{{ team[2] }}-{{ team[3] }} <a href="/team/{{ team[0] }}">{{ team[1] }}</a></div>
+        <li>{{ team[2] }}-{{ team[3] }} <a href="/team/{{ team[0] }}">{{ team[1] }}</a></li>
         {% endfor %}
     </div>
     <div class="column">
-        <h2>Games played in the league (Winners in bold)</h2>
+        <h2>Recent Games</h2>
+        <h3>(Winners in bold)</h3>
         {% for game in games %}
         {% if game[5] == game[1] %}
-        <div class="item"><a href="/team/{{ game[1] }}"><b>{{ game[0] }}</b></a> vs. <a href="/team/{{ game[3] }}">{{ game[2] }}</a></div>
+        <li><a href="/team/{{ game[1] }}"><b>{{ game[0] }}</b></a> vs. <a href="/team/{{ game[3] }}">{{ game[2] }}</a></li>
         {% else %}
-        <div class="item"><a href="/team/{{ game[1] }}">{{ game[0] }}</a> vs. <a href="/team/{{ game[3] }}"><b>{{ game[2] }}</b></a></div>
+        <li><a href="/team/{{ game[1] }}">{{ game[0] }}</a> vs. <a href="/team/{{ game[3] }}"><b>{{ game[2] }}</b></a></li>
         {% endif %}
         {% endfor %}
     </div>
@@ -25,9 +26,9 @@
 <h2>Players in the league</h2>
     {% for player in players %}
     {% if player.gp == 0%}
-    <div class="item"><a href="/player/{{ player.id }}">{{ player.player }}</a> | <a href="/team/{{ player.team_id }}">{{ player.team }}</a> | {{ player.pts }} pts|{{ player.reb }} reb|{{ player.ast }} ast in {{ player.gp }} games played</div>
+    <li><a href="/player/{{ player.id }}">{{ player.player }}</a> | <a href="/team/{{ player.team_id }}">{{ player.team }}</a> | {{ player.pts }} pts|{{ player.reb }} reb|{{ player.ast }} ast in {{ player.gp }} games played</li>
     {% else %}
-    <div class="item"><a href="/player/{{ player.id }}">{{ player.player }}</a> | <a href="/team/{{ player.team_id }}">{{ player.team }}</a> | {{ (player.pts / player.gp) | round(1) }} pts|{{ (player.reb / player.gp) | round(1)  }} reb|{{ (player.ast / player.gp) | round(1)  }} ast in {{ player.gp }} games played</div>
+    <li><a href="/player/{{ player.id }}">{{ player.player }}</a> | <a href="/team/{{ player.team_id }}">{{ player.team }}</a> | {{ (player.pts / player.gp) | round(1) }} pts|{{ (player.reb / player.gp) | round(1)  }} reb|{{ (player.ast / player.gp) | round(1)  }} ast in {{ player.gp }} games played</li>
     {% endif %}
     {% endfor %}
 </div>

@@ -1,16 +1,16 @@
 {% extends "layout.html" %}
 
-{% block title %}Add a game{% endblock %}
+{% block title %}Add a Game{% endblock %}
 
 {% block content %}
-  <h2>Add new game</h2>
+  <h2>Add New Game</h2>
   {% if session.username %}
   <form action="/finalise_game" method="post">
     <p>
         Choose your team to play in the game: <br />
         <p>
         Team:
-        <select name="away_team">
+        <select name="away_team" required>
             <option value="">(choose a team)</option>
             {% for team in teams %}
             {% if team.owner == session.user_id %}
@@ -23,7 +23,7 @@
         Choose another team to host the game: <br />
         <p>
         Team:
-        <select name="home_team">
+        <select name="home_team" required>
             <option value="">(choose a team)</option>
             {% for team in teams %}
             <option value="{{ team.id }}">{{ team.team }}</option>

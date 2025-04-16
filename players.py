@@ -83,3 +83,8 @@ def find_players(query):
 def player_count():
     sql = """COUNT(*) FROM players"""
     return db.query(sql)
+
+
+def get_all_names():
+    sql = "SELECT player FROM players"
+    return db.query(sql)

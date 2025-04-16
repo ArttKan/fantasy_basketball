@@ -7,11 +7,12 @@ def post_result(home_id, away_id, winner_id):
     db.execute(sql, [home_id, away_id, winner_id])
 
 
-def get_games():
+def get_latest_games():
     sql = """SELECT home_id,
                     away_id,
                     winner_id
-                FROM games"""
+                FROM games
+                ORDER BY home_id DESC limit 20"""
     return db.query(sql)
 
 

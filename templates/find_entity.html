@@ -3,30 +3,29 @@
 {% block title %}Search{% endblock %}
 
 {% block content %}
-    <h2>Search for a team</h2>
+<div class="row">
+    <div class="column">
+    <h2>Search for a Team</h2>
     <form action="/find_entity" method="get">
         <p>
             Search for: <input type="text" name="team_query" value="{{ query }}">
         </p>
         <input type="submit" value="Search">
     </form>
-
-    <p>
-        <a href="/">Back</a>
-    </p>
-
-
-    <h2>Search for a player</h2>
+    </div>
+    <div class="column">
+    <h2>Search for a Player</h2>
     <form action="/find_entity" method="get">
         <p>
             Search for: <input type="text" name="player_query" value="{{ query }}">
         </p>
         <input type="submit" value="Search">
     </form>
-
-    <p>
-        <a href="/">Back</a>
-    </p>
+    </div>
+</div>
+<p>
+    <a href="/">Back</a>
+</p>
     {% if team_query %}
     <h2>Results</h2>
     <ul>

@@ -97,3 +97,8 @@ def get_games(team_id):
 def teams_count():
     sql = """COUNT(*) FROM teams"""
     return db.query(sql)
+
+
+def get_all_names():
+    sql = "SELECT team FROM teams"
+    return db.query(sql)

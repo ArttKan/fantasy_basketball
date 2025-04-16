@@ -3,11 +3,11 @@
 {% block title %}Finalise the game {{ home_team.team }} vs. {{ away_team.team }}{% endblock %}
 
 {% block content %}
-  <h2>Finalise the game {{ home_team.team }} vs. {{ away_team.team }}</h2>
+  <h2>Finalise the Game {{ home_team.team }} vs. {{ away_team.team }}</h2>
   <form action="/create_game" method="post">
     <p>
         Choose the winner of the game: <br />
-        <select name="winner">
+        <select name="winner" required>
             <option value="">(choose a team)</option>
             <option value="{{ home_team.id }}">{{ home_team.team }}</option>
             <option value="{{ away_team.id }}">{{ away_team.team }}</option>
