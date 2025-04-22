@@ -15,10 +15,14 @@ Functionalities include:
  ```
  pip install flask
  ```
+Install the virtual environment with:  
+ ```
+python3 -m venv venv
+ ```
  Initialise the database with:  
   ```
 sqlite3 database.db < schema.sql
-python -m init_seed
+python3 -m init_seed
  ```
  Enter the virtual environment with:  
  ```
