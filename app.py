@@ -98,8 +98,8 @@ def add_team():
 
 @app.route("/create_team", methods=["POST"])
 def create_team():
-    require_login()
-    check_csrf()
+    #require_login()
+    #check_csrf()
     team_name = request.form["name"]
     all_team_names = []
     for i in teams.get_all_names():
