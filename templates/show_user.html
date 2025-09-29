@@ -4,12 +4,6 @@
 
 {% block content %}
     <h2>{{ user.username }}</h2>
-    {% if session.user_id == user.id  %}
-    <p>
-        <a href="">Edit user</a>
-        <a href="">Delete user</a>
-    </p>
-    {% endif %}
     <h2>ID: {{ user.id }}</h2>
     <p>
       Teams ({{ teams | count }}):
