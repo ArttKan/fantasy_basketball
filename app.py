@@ -328,6 +328,7 @@ def create():
     # if password1 != password2:
     #    return "ERROR: Passwords do not match"
     # if len(password1) < 10;
+    #    return "ERROR: Password too short"
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
