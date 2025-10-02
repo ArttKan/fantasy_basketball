@@ -98,8 +98,8 @@ def add_team():
 
 @app.route("/create_team", methods=["POST"])
 def create_team():
-    #require_login()
-    #check_csrf()
+    # require_login()
+    # check_csrf()
     team_name = request.form["name"]
     all_team_names = []
     for i in teams.get_all_names():
@@ -324,10 +324,10 @@ def create_game():
 def create():
     username = request.form["username"]
     password1 = request.form["password1"]
-    password2 = request.form["password2"]
-    if password1 != password2:
-        return "ERROR: Passwords do not match"
-
+    # password2 = request.form["password2"]
+    # if password1 != password2:
+    #    return "ERROR: Passwords do not match"
+    # if len(password1) < 10;
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
