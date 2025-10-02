@@ -35,11 +35,15 @@ def get_team(team_id):
     return result[0] if result else None
 
 
+# def update_team(team_id, team_name, owner_id):
+#     sql = """UPDATE teams SET team = ?,
+#                             owner = ?
+#                             WHERE id = ?"""
+#     db.execute(sql, [team_name, owner_id, team_id])
+
 def update_team(team_id, team_name, owner_id):
-    sql = """UPDATE teams SET team = ?,
-                            owner = ?
-                            WHERE id = ?"""
-    db.execute(sql, [team_name, owner_id, team_id])
+    sql = f"""UPDATE teams SET team = '{team_name}', owner = '{owner_id}' WHERE id = '{team_id}'"""
+    db.execute(sql)
 
 
 def delete_team(team_id):
