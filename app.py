@@ -117,8 +117,8 @@ def create_team():
 def edit_team(team_id):
     require_login()
     team = teams.get_team(team_id)
-    if team["owner"] != session["user_id"]:
-        abort(403)
+    # if team["owner"] != session["user_id"]:
+    #     abort(403)
     if not team:
         abort(404)
     return render_template("edit_team.html", team=team)
